@@ -40,7 +40,12 @@ module.exports.signup_post = async(req , res) =>{
         const pass =await pre(JSON.stringify(req.body.password));                   //hashing
                                                       
         const user={username: req.body.username, email:req.body.email, password:pass};
-        await new Promise((resolve, reject)=>{                                                      //injaaaaaaaaaaaaa
+        await new Promise((resolve, reject)=>{            
+            if(!fs.existsSync('./data')){
+                fs.mkdir('./data', (err)=>{
+                    console.log(err)
+                })
+            }
             fs.mkdir(`./data/${req.body.email}`, (err)=>{
                 console.log(err)
                 if(!err){

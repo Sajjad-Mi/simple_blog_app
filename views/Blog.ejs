@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home</title>
+        <title>Blogs</title>
         <link href="/Style.css" rel="stylesheet" type="text/css" />
 
     </head>
@@ -9,12 +9,16 @@
         <%- include("./partials/nav.ejs") %>
         <h1>Blog's</h1>
         <div class="container">
-            <% data.forEach(title=>{ %>
-                <div class="row-blog">
-                
-                    <a href="blog/main/<%= title.substr(0, (title.length-4)) %>"><h4><%= title.substr(0, (title.length-4)) %></h4></a>
-                 </div>
-                 <% }) %>
+            <% if (data.length == 0){ %>
+                <h3>There is no article written</h3>
+                <h4>create a new <a href='/new-blog'>aricle</a></h4>
+            <% }else{ %>
+                <% data.forEach(title=>{ %>
+                    <div class="row-blog">
+                        <a href="blog/main/<%= title.substr(0, (title.length-4)) %>"><h4><%= title.substr(0, (title.length-4)) %></h4></a>
+                    </div>
+                <% }) %>
+            <% } %>  
         </div>
 
     </body>
