@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="/style.css" rel="stylesheet" type="text/css" />
+        <title>Blog</title>
+    </head>
+    <body>
+        <%- include("./partials/nav.ejs") %>
+
+        <form action="/log-in" id="formSign">
+            <h2>Log in</h2>
+            <label for="email">Email</label>
+            <input type="text" name="email" required />
+            <label for="password">Password</label>
+            <input type="password" name="password" required />
+            <div class="input error"></div>
+            <button>Log in</button>
+          </form>          
+    </body>
+    <script>
+        const form = document.querySelector('form');
+        const inputError = document.querySelector('.input.error');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            inputError.textContent = '';                                    //reset error input
+
+            const email = form.email.value;
+            const password = form.password.value;
+
+            try {                                                               //send the value and show error if there is one
+                const res = await fetch('/log-in', { 
+                    method: 'POST', 
+                    body: JSON.stringify({ email, password }),
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+
+                if(data.error !== ""){
+                    inputError.textContent = JSON.stringify(data.error);
+                }
+                else{
+                    location.assign('/');
+                    } 
+                }
+            catch (err) {
+                console.log(err);
+                }
+            });
+    </script>
+</html>

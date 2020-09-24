@@ -1,0 +1,245 @@
+body{
+    padding:30px;
+    width: 65%;
+    margin: auto;
+    background-color: #c7c5be;
+    font-family: 'Hind Siliguri', sans-serif;
+}
+nav{	
+    height: 55px;
+    width: 100%;
+    margin: auto;
+            
+}
+nav ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden; 
+}
+nav li {
+    float:right;
+}
+.user li{
+    display: inline;
+}
+nav li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 16px 50px;
+    text-decoration: none;
+}
+nav li a:hover{
+    background-color: white;
+    color:crimson;
+}
+ 
+
+/* sign up style */
+#formSign{
+    width: 360px;
+    margin: 100px auto;
+    padding: 30px;
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background: white;
+}
+input[type=text], input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 3px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+input[type=text]:focus, input[type=password]:focus {
+  border: 3px solid #555;
+}
+label{
+    display: block;
+    margin: 20px 0 5px;
+  }
+.error{
+    color: #da0404;
+    margin: 10px 2px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+button{
+    margin-top: 30px;
+    border-radius: 5px;
+    background: #8f8b7c;
+    border:0;
+    font-weight: 700;
+    font-size: 0.8em;
+    display: block;
+    padding: 10px 16px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition-property: background-color;
+    transition-duration: 2s;
+}
+button:hover{
+  background-color: #ccc;
+}
+/*new blog style*/
+.form-content form{
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .form-content input,
+  .form-content textarea{
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 8px;
+  }
+  .form-content label{
+    display: block;
+    margin-top: 24px;
+  }
+  
+ .ck-editor__editable {
+    min-height: 300px ;
+  }
+
+   .blog-text{
+         max-width: 80%;
+         position: relative;
+         margin:auto;
+         background-color: white;
+         border-radius: 5px;
+     }
+     .blog-text h1{
+         padding: 10px 0 0 10px;
+     }
+     .text-p{
+        display: block;
+        width: 100%;
+        
+       
+        padding: 25px;
+
+     }
+     .blog-text p{
+        word-break: break-all;
+        text-align: justify;
+
+     }
+    
+     .delete{
+         position: absolute;
+         top: 7px;
+         right: 7px;
+        border-radius: 50%;         
+     }
+     .edit{
+       position: absolute;
+       top: 35px;
+       right: 7px;
+       border-radius: 50%;   
+     }
+     .delete:hover , .edit:hover{
+         cursor: pointer;
+         box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+
+     }
+     
+     .form-content form{
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .form-content input,
+    .form-content textarea{
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    .form-content label{
+      display: block;
+      margin-top: 24px;
+    }
+    
+    .ck-editor__editable {
+      min-height: 300px ;
+    }
+    /* main aritcle style */
+    .contain .blog-text{
+      max-width: 80%;
+      position: relative;
+      margin:auto;
+      background-color: white;
+      border-radius: 5px;
+      height: 80%;
+  }
+  .contain .blog-text h1{
+      padding: 10px 0 0 10px;
+  }
+  .contain .text-p{
+     display: block;
+     width: 100%;
+     padding: 2px;
+  }
+  .contain .blog-text p{
+     word-break: break-all;
+     text-align: justify;
+
+  }
+  .contain .delete{
+      position: absolute;
+      top: 7px;
+      right: 7px;
+     border-radius: 50%;         
+  }
+  .contain .edit{
+    position: absolute;
+    top: 35px;
+    right: 7px;
+    border-radius: 50%;   
+  }
+  .contain .delete:hover ,.contain .edit:hover{
+      cursor: pointer;
+      box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+  }
+  .contain .form-content form{
+   max-width: 500px;
+   margin: 0 auto;
+ }
+ .contain .form-content input,
+ .contain .form-content textarea{
+   display: block;
+   width: 100%;
+   margin: 10px 0;
+   padding: 8px;
+ }
+ .contain .form-content label{
+   display: block;
+   margin-top: 24px;
+ }
+ 
+ .contain .ck-editor__editable {
+   min-height: 300px ;
+ }
+
+  /* blog css */
+  .row-blog{
+    margin-left: 20px;
+  }
+  .row-blog a{
+    display: block;
+    margin: 40px 0;
+    padding-left: 30px;
+    border-left: 6px solid crimson;
+    text-decoration: none;
+    font-size: 20px;
+    color:black;
+    width: 200px;
+  }
+  .row-blog a:hover{
+    color: crimson;
+  }
+  

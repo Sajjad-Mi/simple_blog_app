@@ -1,0 +1,80 @@
+<html lang="en">
+<head>
+  <link href="/Style.css" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Andika' rel='stylesheet'>
+  <script src="https://cdn.ckeditor.com/ckeditor5/22.0.0/classic/ckeditor.js"></script> 
+
+
+  <title><%= subject %></title>
+</head>
+<body>
+  <%- include("./partials/nav.ejs") %>
+
+<div class="contain" >
+  <div class="blog-text">
+    <h1><%= subject %></h1>
+    <hr>
+    <div class="text-p" id="text-content">
+      <p><%- content.substr(1, content.length-2) %></p>
+    </div>
+
+    <a class="delete" data-doc="<%= subject %>"><img src="/trashcan.svg"></a>
+    <a class="edit" data-doc="<%= subject %>"><img src="/edit.svg"></a>
+    <div class="form-content">
+      <form method="POST" id="form-edit" action="/blog/edit/<%= subject %>?_method=PUT">
+        <textarea id="editor" name="main"><%= content.substr(1, content.length-2) %></textarea>
+        <input type="submit" value="Save">
+      </form>
+
+    </div>
+
+  </div>
+</div>
+    <script>
+        const trashcan = document.querySelector('a.delete');
+    
+        trashcan.addEventListener('click', (e) => {                       //for deleting the blog
+          const endpoint = `/blog/delete/${trashcan.dataset.doc}`;
+    
+          fetch(endpoint, {
+            method: 'DELETE',
+          })
+          .then(response => response.json())
+          .then(data => window.location.href = data.redirect)
+          .catch(err => console.log(err));
+        });
+        
+          document.getElementById("form-edit").style.display = "none";                  
+          const edit = document.querySelector("a.edit");  
+          edit.addEventListener('click', (e) =>{                                          //if the edit btn pressed show the edit form
+            document.getElementById("text-content").style.display = "none";
+            document.getElementById("form-edit").style.display = "block";
+          });
+        
+          ClassicEditor
+            .create( document.querySelector( '#editor'),{
+              link: {
+			          decorators: {
+				          isExternal: {
+					          mode: 'manual',
+					          label: 'Open in a new tab',
+	                  defaultValue: true,
+	                  attributes: {
+		                  target: '_blank',
+		                  rel: 'noopener noreferrer'
+	                  }
+                  },   
+                }
+              }
+            
+            }) .then( editor => {
+                console.log( 'Editor was initialized', editor );
+            })
+           .catch( error => {
+               console.error( error );
+            } );
+     
+      </script>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+  }
+  body{
+    font-family: 'Andika';
+      
+      padding:30px;
+      width: 65%;
+      margin: auto;
+      background-color: #E3E2DF;
+    }
+    nav{	
+        height: 55px;
+        width: 100%;
+        margin: auto;
+        		
+      }
+      nav ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        overflow: hidden;
+       
+      }
+      nav li {
+        float:right;
+      }
+      nav li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 16px 50px;
+        text-decoration: none;
+      }
+      nav li a:hover{
+          background-color: white;
+          color:crimson;
+      }
+     .blog-text{
+         max-width: 80%;
+         position: relative;
+         margin:auto;
+         background-color: white;
+         border-radius: 5px;
+     }
+     .blog-text h1{
+         padding: 10px 0 0 10px;
+     }
+     .text-p{
+        display: block;
+        width: 100%;
+        
+       
+        padding: 25px;
+
+     }
+     .blog-text p{
+        word-break: break-all;
+        text-align: justify;
+
+     }
+    
+     .delete{
+         position: absolute;
+         top: 7px;
+         right: 7px;
+        border-radius: 50%;         
+     }
+     .edit{
+       position: absolute;
+       top: 35px;
+       right: 7px;
+       border-radius: 50%;   
+     }
+     .delete:hover , .edit:hover{
+         cursor: pointer;
+         box-shadow: 1px 2px 3px rgba(0,0,0,0.2);
+
+     }
+     
+     .form-content form{
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .form-content input,
+    .form-content textarea{
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+    .form-content label{
+      display: block;
+      margin-top: 24px;
+    }
+    
+    .ck-editor__editable {
+      min-height: 300px ;
+    }
