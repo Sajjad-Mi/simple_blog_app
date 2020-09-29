@@ -1,15 +1,19 @@
-<nav>
-    <ul>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/new-blog">New Blog</a></li>
-        <li><a href="/about">About</a></li>
-        <% if(name !== null){ %>
-            <li style="float: left;"><a href="/log-out">Log Out</a></li>
-            <li style="float: left;display: block; padding: 16px 50px;"><%= name %></li>
-        <% }else{ %>
-            <li style="float: left;"><a href="/sign-up">Sign Up</a></li>
-            <li style="float: left;"><a href="/log-in">Log In</a></li>
-        <% } %>
-    </ul>
-    <hr>
-</nav>
+<header>
+    <nav>
+        <ul class="right">
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/new-blog">New Blog</a></li>
+            <li><a href="/about">About</a></li>
+        </ul>
+        <ul class="left">
+            <% if(name !== null){ %>
+                <li><a href="/log-out">Log Out</a></li>
+                <li style="display: block; padding: 16px 50px;text-align: center;"><%= name %></li>
+            <% }else{ %>
+                <li ><a href="/sign-up">Sign Up</a></li>
+                <li ><a href="/log-in">Log In</a></li>
+            <% } %>
+        </ul>
+        <hr>
+    </nav>
+</header>

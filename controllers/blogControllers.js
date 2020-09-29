@@ -13,13 +13,9 @@ module.exports.blog_get = (req , res) =>{
                 fs.readdir(`./data/${decode.userName}`, (err, data)=>{
                     let index = data.indexOf("info.txt")
                     if (index > -1) {
-                        data.splice(index, 1);                              //remove the info txt file form array 
+                        data.splice(index, 1);                                               //remove the info txt file form array 
                     }
-                    data.forEach(file => {                                  
-                        if(!data.includes(file)){                       //if a new blog is added add that to home page 
-                            data.push(file);
-                        }
-                    });                   
+                  
                     resolve(data);
                 });
             })
@@ -28,7 +24,7 @@ module.exports.blog_get = (req , res) =>{
         }
     })
 }
-module.exports.main_get = (req, res) =>{                                                            //for showing the article
+module.exports.main_get = (req, res) =>{                                                                            //for showing the article
     const cookieJWT = req.cookies.jwt;
     const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
 
