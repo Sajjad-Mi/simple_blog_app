@@ -4,6 +4,8 @@ const authRoutes = require('./routes/AuthRoutes');
 const blogRoutes = require('./routes/BlogRoutes');
 const cookieParser = require('cookie-parser');
 const {authMiddle, checkUser}= require('./middleware/authMiddle.js')
+const mongoose = require('mongoose')
+
 
 const app = express();
 
@@ -15,8 +17,11 @@ app.use(express.urlencoded({extended: true}));
 
 
 app.set('view engine', 'ejs');
+mongoose.connect('mongodb://localhost/blog_project',{ useNewUrlParser: true,  useUnifiedTopology: true,   useFindAndModify: false, useCreateIndex: true
+}).then(()=>{
+    app.listen(3000);
+})
 
-app.listen(3000);
 
 app.get('*', checkUser);
 app.get('/', (req, res) => res.render('Home'));

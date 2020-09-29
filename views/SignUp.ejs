@@ -28,12 +28,11 @@
           
             form.addEventListener('submit', async (e) => {
               e.preventDefault();
-          
-              // reset errors
-              emailError.textContent = '';
+                                                                                                 
+              emailError.textContent = '';                        // reset errors
               passwordError.textContent = '';
           
-              // get values
+              
               const email = form.email.value;
               const password = form.password.value;
               const username = form.username.value;
@@ -46,19 +45,19 @@
                 });
             
                const data = await res.json();
-                console.log(data);
-            
-                 // emailError.textContent = data.errors.email;
-                 if(JSON.stringify(data.error).includes("password")){
-                  passwordError.textContent = JSON.stringify(data.error);
-                 }
-                 if(JSON.stringify(data.error).includes("email")){
-                  emailError.textContent = JSON.stringify(data.error);
-                 }
-          
+
                 if (data.user) {
                   location.assign('/');
                 }
+            
+                 if(JSON.stringify(data.error.passwordError).includes("password")){
+                  passwordError.textContent = JSON.stringify(data.error.passwordError);
+                 }
+                 if(JSON.stringify(data.error.emailError).includes("email")){
+                  emailError.textContent = JSON.stringify(data.error.emailError);
+                 }
+          
+             
             }
               catch (err) {
                 console.log(err);
