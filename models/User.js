@@ -39,9 +39,9 @@ const userSchema = new mongoose.Schema({
       if (auth) {
         return user;
       }
-      throw Error('incorrect password');
+      throw Error('email or password is wrong');
     }
-    throw Error('incorrect email');
+    throw Error('email or password is wrong');
   };
   const User = mongoose.model('user', userSchema);
 
