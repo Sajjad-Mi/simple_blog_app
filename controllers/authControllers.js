@@ -1,18 +1,10 @@
-const fs = require("fs");
-const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const validator = require('validator');
 const User = require("../models/User");
 
 const createToken = (id)=>{
     return jwt.sign({ id}, 'sajjad', {
         expiresIn: "2 days"
       });
-}
-const pre = async function(pass){                                               //function for hashing the password
-    const salt = await bcrypt.genSalt();
-    const data = await bcrypt.hash(pass, salt);
-    return data;
 }
 const checkEmailError = (error)=>{
     let errorMessage = ""

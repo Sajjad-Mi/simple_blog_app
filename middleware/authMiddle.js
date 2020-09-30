@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken');
+const User = require("../models/User");
 
-const authMiddle = (req, res , next)=>{
+
+const authMiddle = (req, res , next)=>{                                         //check the cookie validation
     const cookieJWT = req.cookies.jwt;
     if(cookieJWT){
-        const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
+        jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
             if(err){
                 console.log(err)
                 res.redirect("/log-in")
@@ -16,7 +18,7 @@ const authMiddle = (req, res , next)=>{
     }
 }
 
-const checkUser = (req, res, next) => {
+const checkUser = (req, res, next) => {                                           //check the cookie and send the user name for nav
     const token = req.cookies.jwt;
     if (token) {
       jwt.verify(token, 'sajjad', async (err, decodedToken) => {
@@ -24,8 +26,8 @@ const checkUser = (req, res, next) => {
           res.locals.name = null;
           next();
         } else {
-          //let user = await User.findById(decodedToken.id);
-          res.locals.name = decodedToken.name;
+          let user = await User.findById(decodedToken.id);
+          res.locals.name = user.name;
           next();
         }
       });

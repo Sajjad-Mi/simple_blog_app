@@ -13,9 +13,9 @@
                 <h3>There is no article written</h3>
                 <h4>create a new <a href='/new-blog'>aricle</a></h4>
             <% }else{ %>
-                <% data.forEach(title=>{ %>
+                <% data.forEach(blog=>{ %>
                     <div class="row-blog">
-                        <a href="blog/main/<%= title.substr(0, (title.length-4)) %>"><h4><%= title.substr(0, (title.length-4)) %></h4></a>
+                        <a href="blog/main/<%= blog.title %>"><h4><%= blog.title %></h4></a>
                     </div>
                 <% }) %>
             <% } %>  

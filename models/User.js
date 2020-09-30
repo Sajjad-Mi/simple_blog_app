@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const blogSchema = new mongoose.Schema({
   title: {
     type: String,
+    unique: true
   },
   main: {
     type: String, 

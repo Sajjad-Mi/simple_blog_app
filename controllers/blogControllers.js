@@ -1,85 +1,78 @@
-const fs = require("fs");
-const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
-const validator = require('validator');
+const User = require("../models/User");
 
 module.exports.blog_get = (req , res) =>{
     const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
-        if(err){
-            console.log(err)
-        } else{
-            const data = await new Promise((resolve, reject)=>{                              //for reading all file of the dir of data  
-                fs.readdir(`./data/${decode.userName}`, (err, data)=>{
-                    let index = data.indexOf("info.txt")
-                    if (index > -1) {
-                        data.splice(index, 1);                                               //remove the info txt file form array 
-                    }
-                  
-                    resolve(data);
-                });
-            })
-            res.render('Blog', { data });
-
-        }
+    jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
+        
+        const user = await User.findById(decode.id)
+        res.render('Blog', {data: await user.blogs})                                                            //send the user blogs 
     })
 }
-module.exports.main_get = (req, res) =>{                                                                            //for showing the article
+module.exports.main_get = (req, res) =>{                                                                            //show the blog page 
     const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
-
-        new Promise((resolve, reject)=>{
-            fs.readFile(`./data/${decode.userName}/${req.params.subject}.txt`, "utf8", (err, blogData)=>{              //read the content of the article
-                    resolve(blogData);
-            });
-        }).then((blogData)=>{
-            res.render("Main", {content:blogData, subject: req.params.subject});
-
-        });
+    jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{  
+        const user = await User.findById(decode.id)
+        
+          const index = user.blogs.findIndex((blog)=>{
+             if(blog.title === req.params.title){
+                 return true;
+              }
+           })
+        
+           res.render("Main", {content: user.blogs[index].main, subject: user.blogs[index].title});
     })
 }
 module.exports.blogDelete_delete = (req, res)=>{
     const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
-        fs.unlink(`./data/${decode.userName}/${req.params.subject}.txt`, (err)=>{
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log("file deleted");
+    jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
+       
+        const user = await User.findById(decode.id)
+        const index = user.blogs.findIndex(blog=>{
+            if(blog.title === req.params.subject){                                  //find the blog for delete
+                return true;
             }
         })
+        
+        user.blogs.splice(index, 1);                                            //remove the article from the user blogs
+        await user.save()
         res.json({ redirect: '/blog' });
     })
 }
 module.exports.newBlog_get = (req , res) =>{
     res.render("New-Blog")
-
 }
 module.exports.create_post = (req , res) =>{
    const cookieJWT = req.cookies.jwt;
-   const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
+   jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
        if(err){
            console.log(err)
        } else{
-           fs.writeFile(`./data/${decode.userName}/${req.body.subject}.txt`, JSON.stringify(req.body.main), (err)=>{
-               console.log(err)
-           })
-           res.redirect("Blog")
+           const user = await User.findById(decode.id)
+           user.blogs.push({title:req.body.subject, main:req.body.main})
+           user.save()
+           res.redirect('Blog')
        }
    })
 }
 module.exports.blogEdit_put = (req, res) =>{
     const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
+    jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
         if(err){
             console.log(err)
         } else{
-            console.log(req.body.subject)
-            fs.writeFile(`./data/${decode.userName}/${req.params.subject}.txt`, JSON.stringify(req.body.main), (err)=>{
-                console.log(err)
+            
+            const user = await User.findById(decode.id)
+            const index = user.blogs.findIndex(blog=>{                                      //find the blog for edit
+                if(blog.title === req.params.subject){
+                    return true;
+                }
             })
-            res.redirect(`/blog/main/${req.params.subject}`)
+            
+            user.blogs[index].main = req.body.main                                              //added the changes
+            await user.save()
+             res.redirect(`/blog/main/${req.params.subject}`)
+
         }
     })
 }
