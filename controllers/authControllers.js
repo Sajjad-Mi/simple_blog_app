@@ -20,7 +20,7 @@ const checkEmailError = (error)=>{
 const checkPassError = (error)=>{
     let errorMessage = ""
     if(error.includes("char")){
-        errorMessage = "Your password should be atleast 6 char"
+        errorMessage = "Your password should be at least 6 char"
     }
 
     return errorMessage
