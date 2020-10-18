@@ -2,7 +2,7 @@
 This is a simple blog app with node and express
 # setup
 ```
-git clone https://github.com/Sajjad-Mi/simple_blog_app.gitgit
+git clone https://github.com/Sajjad-Mi/simple_blog_app.git
 npm install 
 ```
 Open the [localhost:3000](http://localhost:3000)
