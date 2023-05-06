@@ -9,13 +9,13 @@
         <%- include("./partials/nav.ejs") %>
         <h1>Blog's</h1>
         <div class="container">
-            <% if (data.length == 0){ %>
+            <% if (titles.length === 0){ %>
                 <h3>There is no article written</h3>
                 <h4>create a new <a href='/new-blog'>aricle</a></h4>
             <% }else{ %>
-                <% data.forEach(title=>{ %>
+                <% titles.forEach(titleObject=>{ %>
                     <div class="row-blog">
-                        <a href="blog/main/<%= title.substr(0, (title.length-4)) %>"><h4><%= title.substr(0, (title.length-4)) %></h4></a>
+                        <a href="blog/main/<%= titleObject.title %>"><h4><%= titleObject.title %></h4></a>
                     </div>
                 <% }) %>
             <% } %>  

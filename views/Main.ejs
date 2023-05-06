@@ -15,14 +15,14 @@
     <h1><%= subject %></h1>
     <hr>
     <div class="text-p" id="text-content">
-      <p><%- content.substr(1, content.length-2) %></p>
+      <p><%- content %></p>
     </div>
 
     <a class="delete" data-doc="<%= subject %>"><img src="/trashcan.svg"></a>
     <a class="edit" data-doc="<%= subject %>"><img src="/edit.svg"></a>
     <div class="form-content">
       <form method="POST" id="form-edit" action="/blog/edit/<%= subject %>?_method=PUT">
-        <textarea id="editor" name="main"><%= content.substr(1, content.length-2) %></textarea>
+        <textarea id="editor" name="main"><%= content %></textarea>
         <input type="submit" value="Save">
       </form>
 

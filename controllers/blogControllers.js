@@ -1,85 +1,78 @@
-const fs = require("fs");
-const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
-const validator = require('validator');
+const db = require("../model");
+const Blog = db.blogs;
 
-module.exports.blog_get = (req , res) =>{
-    const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", async (err, decode)=>{
-        if(err){
-            console.log(err)
-        } else{
-            const data = await new Promise((resolve, reject)=>{                              //for reading all file of the dir of data  
-                fs.readdir(`./data/${decode.userName}`, (err, data)=>{
-                    let index = data.indexOf("info.txt")
-                    if (index > -1) {
-                        data.splice(index, 1);                                               //remove the info txt file form array 
-                    }
-                  
-                    resolve(data);
-                });
-            })
-            res.render('Blog', { data });
+module.exports.blog_get = async (req, res) => {
+  try {
+    const titlesDb = await Blog.findAll({
+      attributes: ["title"],
+      where: {
+        user_id: req.cookies.user_id,
+      },
+    });
 
-        }
-    })
-}
-module.exports.main_get = (req, res) =>{                                                                            //for showing the article
-    const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
+    const titles = JSON.parse(JSON.stringify(titlesDb, null, 2));
+    res.render("Blog", { titles });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-        new Promise((resolve, reject)=>{
-            fs.readFile(`./data/${decode.userName}/${req.params.subject}.txt`, "utf8", (err, blogData)=>{              //read the content of the article
-                    resolve(blogData);
-            });
-        }).then((blogData)=>{
-            res.render("Main", {content:blogData, subject: req.params.subject});
+module.exports.main_get = async (req, res) => {
+  try {
+    const blog = await Blog.findOne({
+      where: { user_id: req.cookies.user_id, title: req.params.subject },
+    });
 
-        });
-    })
-}
-module.exports.blogDelete_delete = (req, res)=>{
-    const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
-        fs.unlink(`./data/${decode.userName}/${req.params.subject}.txt`, (err)=>{
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log("file deleted");
-            }
-        })
-        res.json({ redirect: '/blog' });
-    })
-}
-module.exports.newBlog_get = (req , res) =>{
-    res.render("New-Blog")
+    res.render("Main", { content: blog.body, subject: blog.title });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-}
-module.exports.create_post = (req , res) =>{
-   const cookieJWT = req.cookies.jwt;
-   const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
-       if(err){
-           console.log(err)
-       } else{
-           fs.writeFile(`./data/${decode.userName}/${req.body.subject}.txt`, JSON.stringify(req.body.main), (err)=>{
-               console.log(err)
-           })
-           res.redirect("Blog")
-       }
-   })
-}
-module.exports.blogEdit_put = (req, res) =>{
-    const cookieJWT = req.cookies.jwt;
-    const user = jwt.verify(cookieJWT, "sajjad", (err, decode)=>{
-        if(err){
-            console.log(err)
-        } else{
-            console.log(req.body.subject)
-            fs.writeFile(`./data/${decode.userName}/${req.params.subject}.txt`, JSON.stringify(req.body.main), (err)=>{
-                console.log(err)
-            })
-            res.redirect(`/blog/main/${req.params.subject}`)
-        }
-    })
-}
+module.exports.blogDelete_delete = async (req, res) => {
+  try {
+    await Blog.destroy({
+      where: { user_id: req.cookies.user_id, title: req.params.subject },
+    });
+
+    res.json({ redirect: "/blog" });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports.newBlog_get = (req, res) => {
+  res.render("New-Blog");
+};
+
+module.exports.create_post = async (req, res) => {
+  try {
+    const blog = {
+      user_id: req.cookies.user_id,
+      title: req.body.subject,
+      body: req.body.main,
+    };
+    const newBlog = await Blog.create(blog);
+    console.log(newBlog.toJSON());
+    res.redirect("Blog");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+module.exports.blogEdit_put = async (req, res) => {
+  try {
+    await Blog.update(
+      { body: req.body.main },
+      {
+        where: {
+          user_id: req.cookies.user_id,
+          title: req.params.subject,
+        },
+      }
+    );
+    res.redirect(`/blog/main/${req.params.subject}`);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
